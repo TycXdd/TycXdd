@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qfedu.demo.user.dao.ICityDao">
+    <resultMap id="cityMap" type="com.qfedu.demo.user.pojo.City">
+        <id column="id" property="id"></id>
+        <result column="name" property="name"></result>
+        <result column="pid" property="pid"></result>
+    </resultMap>
+
+    <sql id="cityColumns">${alias}.id, ${alias}.name, ${alias}.pid</sql>
+
+    <select id="select" resultMap="cityMap" resultType="com.qfedu.demo.user.pojo.City">
+        select 
+        <include refid="cityColumns">
+            <property name="alias" value="t1"/>
+        </include>
+        from sys_city t1 
+        where t1.pid=#{pid}
+    </select>
+
+    <select id="selectPrimaryKey" resultMap="cityMap" resultType="com.qfedu.demo.user.pojo.City">
+        select
+        <include refid="cityColumns">
+            <property name="alias" value="t1"/>
+        </include>
+        from sys_city t1
+        <where>
+            id =#{id}
+        </where>
+    </select>
+
+</mapper>

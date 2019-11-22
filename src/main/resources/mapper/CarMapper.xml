@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qfedu.demo.user.dao.ICarDao">
+    <resultMap id="carMap" type="com.qfedu.demo.user.pojo.Car">
+        <id column="id" property="id"></id>
+        <result column="name" property="name"></result>
+        <result column="type" property="type"></result>
+        <result column="sitnum" property="sitNum"></result>
+        <result column="cid" property="cid"></result>
+        <result column="price" property="price"></result>
+        <result column="number" property="number"></result>
+        <result column="picture" property="picture"></result>
+    </resultMap>
+    <sql id="CarColumns">${alias}.id,${alias}.name,${alias}.type,${alias}.sitNum
+            ,${alias}.cid,${alias}.price,${alias}.number,${alias}.picture</sql>
+
+    <select id="findByPrice" resultType="com.qfedu.demo.user.pojo.Car" resultMap="carMap">
+        select
+        <include refid="CarColumns"><property name="alias" value="t1"/></include>
+        from sys_car t1
+        <where>
+            cid = #{cid}
+        </where>
+        order by price desc
+    </select>
+
+    <select id="findByNum" resultType="com.qfedu.demo.user.pojo.Car" resultMap="carMap">
+        select * from sys_car where cid = #{cid} order by number desc
+    </select>
+
+    <select id="findCar" resultType="com.qfedu.demo.user.pojo.Car" resultMap="carMap">
+        select
+        <include refid="CarColumns"><property name="alias" value="t1"/></include>
+        from sys_car t1 where id =#{id}
+    </select>
+</mapper>
